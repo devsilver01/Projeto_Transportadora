@@ -1,0 +1,6 @@
+ID_Cliente;Nome_Cliente;Contato;Telefone;Email;Endereco_Rua;Endereco_Bairro;Endereco_Cidade
+CL001;Empresa X;Pedro Lima;71993456789;pedro@empresaX.com;Rua Velha;Boca do Rio;Salvador
+CL002;Comercio Y;Fernanda Costa;71994567890;fernanda@comercioY.com;Praca Central;Pituba;Salvador
+CL003;Distribuidora ABC;Ricardo Alves;71995678901;ricardo@distribuidoraabc.com;Avenida Paralela;Alphaville;Salvador
+CL004;Fabrica Z;Juliana Dias;71996789012;juliana@fabricaZ.com;Estrada do Coco;Lauros;Lauro de Freitas
+CL005;Atacadista Beta;Gustavo Rocha;71997890123;gustavo@atacadistabeta.com;Rua do Comercio;Suburbana;Salvador

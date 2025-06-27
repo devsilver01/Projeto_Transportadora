@@ -1,0 +1,6 @@
+ID_Peca;Nome_Peca;Descricao;Quantidade;Localizacao_Estoque
+1;Filtro de Oleo;Filtro para motor diesel;50;Galpao1-PrateleiraA
+2;Pneu Aro 22.5;Pneu para caminhão;20;Galpao2-AreaPneus
+3;Oleo Lubrificante 15W40;Oleo para motor;100;Galpao1-SetorB
+4;Pastilha de Freio;Conjunto para eixo dianteiro;30;Galpao1-PrateleiraC
+5;Bateria 12V 150Ah;Bateria para caminhão;15;Galpao2-AreaEletrica

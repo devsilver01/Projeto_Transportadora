@@ -1,0 +1,4 @@
+ID_Galpao;Nome_Galpao;Capacidade;Localizacao
+G02;Galpao Secundario;300;Area Sul
+G03;Galpao de Manutencao;100;Area Oeste
+G04;Galpao Primario;500;Area Leste

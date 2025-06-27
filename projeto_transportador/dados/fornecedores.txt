@@ -1,0 +1,6 @@
+ID_Fornecedor;Nome_Fornecedor;Contato;Telefone;Email;Endereco_Rua;Endereco_Bairro;Endereco_Cidade
+101;Auto Pecas Diesel;Joao Silva;71998877665;joao@autopecas.com.br;Rua das Flores;Centro;Salvador
+102;Pneus e Cia;Maria Souza;71987654321;maria@pneusecia.com.br;Av. Principal;Comercio;Salvador
+103;Lubrificantes Brasil;Pedro Costa;71999887755;pedro@lubribrasil.com.br;Rua da Paz;Liberdade;Salvador
+104;Freio Seguro Ltda;Ana Carla;71987651234;ana@freioseguro.com;Alameda dos Anjos;Pituacu;Salvador
+105;Eletro Caminhao SA;Fernando Reis;71991235467;fernando@eletrocaminhao.com;Travessa Bahia;Periperi;Salvador

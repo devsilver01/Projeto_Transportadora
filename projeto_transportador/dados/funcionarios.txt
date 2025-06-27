@@ -1,0 +1,6 @@
+ID_Funcionario;Nome_Funcionario;Cargo;Telefone;Email;Endereco_Rua;Endereco_Bairro;Endereco_Cidade
+F001;Carlos Alberto;Mecanico;71991234567;carlos@transportadora.com.br;Rua Nova;Piedade;Salvador
+F002;Ana Paula;Motorista;71992345678;ana@transportadora.com.br;Av. Sete;Liberdade;Salvador
+F003;Roberto Lima;Motorista;71993456789;roberto@transportadora.com.br;Rua do Sol;Itapua;Salvador
+F004;Patricia Mendes;Mecanico;71994567890;patricia@transportadora.com.br;Rua da Esperanca;Cajazeiras;Salvador
+F005;Marcos Santos;Gerente;71995678901;marcos@transportadora.com.br;Av. Central;Centro;Salvador
