@@ -4,3 +4,4 @@ ID_Fornecedor;Nome_Fornecedor;Contato;Telefone;Email;Endereco_Rua;Endereco_Bairr
 103;Lubrificantes Brasil;Pedro Costa;71999887755;pedro@lubribrasil.com.br;Rua da Paz;Liberdade;Salvador
 104;Freio Seguro Ltda;Ana Carla;71987651234;ana@freioseguro.com;Alameda dos Anjos;Pituacu;Salvador
 105;Eletro Caminhao SA;Fernando Reis;71991235467;fernando@eletrocaminhao.com;Travessa Bahia;Periperi;Salvador
+106;dwq;dwq;dwq;dwq;dwq;dwq;dwq

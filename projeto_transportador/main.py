@@ -27,12 +27,30 @@ class MainApplication(tk.Tk):
         self.geometry("1000x700") 
         self.minsize(800, 600) 
 
-        # --- AQUI É ONDE VOCÊ MUDA O TEMA ---
+        # --- CONFIGURAÇÃO SIMPLIFICADA DO TEMA ---
         style = ttk.Style(self)
-        # Tente diferentes temas: 'clam', 'alt', 'default', 'classic', 'vista', 'xpnative', 'winnative'
-        # Em alguns sistemas operacionais, 'clam' ou 'alt' podem oferecer mais personalização de cores.
-        style.theme_use('clam') 
-        # --- FIM DA MUDANÇA DE TEMA ---
+        style.theme_use('clam') # Usando 'clam' como base simples
+
+        # Estilos básicos e claros
+        style.configure(".", background="#F0F0F0", foreground="#333333") # Fundo claro geral
+        style.configure("TLabel", background="#F0F0F0", foreground="#333333")
+        style.configure("Titulo.TLabel", font=("Helvetica", 24, "bold"), background="#F0F0F0", foreground="#0056A0") # Azul para destaque
+        style.configure("Subtitulo.TLabel", font=("Helvetica", 20, "bold"), background="#F0F0F0", foreground="#0056A0")
+
+        style.configure("TButton", font=("Helvetica", 11, "bold"), background="#007ACC", foreground="white", padding=10, relief="flat")
+        style.map("TButton", background=[("active", "#0056A0"), ("pressed", "#003A60")])
+
+        style.configure("TEntry", fieldbackground="white", foreground="black", bordercolor="#CCCCCC")
+        style.configure("TLabelframe", background="#F0F0F0", foreground="#333333", bordercolor="#CCCCCC")
+        style.configure("TLabelframe.Label", background="#F0F0F0", foreground="#333333")
+
+        style.configure("Treeview", background="white", foreground="black", fieldbackground="white", bordercolor="#CCCCCC")
+        style.configure("Treeview.Heading", font=("Helvetica", 10, "bold"), background="#DDDDDD", foreground="#333333")
+        style.map("Treeview", background=[("selected", "#B0D0F0")], foreground=[("selected", "black")]) # Seleção em azul claro
+
+        style.configure("Vertical.TScrollbar", background="#DDDDDD", troughcolor="#F0F0F0")
+        # --- FIM DA CONFIGURAÇÃO SIMPLIFICADA DO TEMA ---
+
 
         # Container onde as diferentes telas serão empilhadas
         container = tk.Frame(self)
