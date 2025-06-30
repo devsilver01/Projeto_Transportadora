@@ -13,39 +13,30 @@ class TelaPecas(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)
         self.controller = controller
-        # Cor de fundo padrão para as telas (poderia vir de uma configuração global ou ser #F0F0F0)
         self.configure(bg="#F0F0F0") 
-        # Nome do arquivo TXT. ESSENCIAL que inclua .txt
         self.nome_arquivo = "pecas.txt" 
-        self.id_chave = "ID_Peca" # Nome da chave ID para esta tabela
+        self.id_chave = "ID_Peca" 
 
         self.criar_widgets()
-        self.carregar_pecas() # Carrega os dados na tabela ao iniciar a tela
+        self.carregar_pecas()
 
     def criar_widgets(self):
-        # Título da Tela
-        # Usando estilo padrão para simplicidade.
-        # Se quiser tema escuro, adicione 'style="Subtitulo.TLabel"' e configure no main.py
         lbl_titulo = ttk.Label(self, text="Gerenciar Peças", font=("Helvetica", 20, "bold"), background="#F0F0F0", foreground="#333333")
         lbl_titulo.pack(pady=20)
 
-        # Frame de Entrada de Dados (caixa com título para organizar os campos)
         frame_entrada = ttk.LabelFrame(self, text="Dados da Peça", padding="15")
         frame_entrada.pack(pady=10, padx=20, fill="x")
 
-        # Estilo básico para os widgets dentro desta tela
-        # Removido estilos complexos para simplicidade
         style = ttk.Style()
         style.configure("TLabel", background="#F0F0F0", font=("Helvetica", 10))
         style.configure("TEntry", font=("Helvetica", 10))
         style.configure("TButton", font=("Helvetica", 10))
-        style.map("TButton", background=[("active", "#cccccc")]) # Efeito ao passar o mouse
+        style.map("TButton", background=[("active", "#cccccc")]) 
 
-        # Campos de Entrada (Entry) e seus rótulos (Label)
         ttk.Label(frame_entrada, text="ID da Peça:").grid(row=0, column=0, padx=5, pady=5, sticky="w")
         self.entry_id = ttk.Entry(frame_entrada, width=30)
         self.entry_id.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
-        self.entry_id.config(state='readonly') # ID não pode ser digitado, apenas visualizado/selecionado
+        self.entry_id.config(state='readonly')
 
         ttk.Label(frame_entrada, text="Nome da Peça:").grid(row=1, column=0, padx=5, pady=5, sticky="w")
         self.entry_nome = ttk.Entry(frame_entrada, width=30)
@@ -111,9 +102,7 @@ class TelaPecas(tk.Frame):
         """Gera um novo ID para a peça, sequencialmente."""
         dados = ler_dados(self.nome_arquivo) # Lê os dados existentes
         if not dados:
-            return 1 # Se não há dados, começa com 1
-        # Encontra o maior ID existente e adiciona 1
-        # Garante que p.get(self.id_chave, '0') seja tratado como string antes de verificar isdigit()
+            return 1 
         max_id = max([int(str(p.get(self.id_chave, '0'))) if str(p.get(self.id_chave, '0')).isdigit() else 0 for p in dados])
         return max_id + 1
 
@@ -170,31 +159,26 @@ class TelaPecas(tk.Frame):
         if not nome or not quantidade or not localizacao:
             messagebox.showwarning("Entrada Inválida", "Nome, Quantidade e Localização são obrigatórios.")
             return
-        
-        # REMOVIDO: a tentativa de converter quantidade para int, para simplicidade com TXT.
-        # Todos os dados serão salvos como string.
 
         nova_peca = {
             self.id_chave: novo_id,
             "Nome_Peca": nome,
             "Descricao": descricao,
-            "Quantidade": quantidade, # Salva como string diretamente
+            "Quantidade": quantidade, 
             "Localizacao_Estoque": localizacao
         }
         
-        # Chama a função do funcional_crud para adicionar.
-        # Ela agora retorna True/False.
         if adicionar_registro(self.nome_arquivo, nova_peca):
             messagebox.showinfo("Sucesso", "Peça adicionada com sucesso!")
-            self.limpar_campos() # Limpa os campos após adicionar
-            self.carregar_pecas() # Recarrega a tabela para mostrar a nova peça
+            self.limpar_campos() 
+            self.carregar_pecas() 
         else:
-            messagebox.showerror("Erro", "Não foi possível adicionar a peça.") # Mensagem de erro simples
+            messagebox.showerror("Erro", "Não foi possível adicionar a peça.") 
 
 
     def atualizar_peca(self):
         """Atualiza uma peça existente no arquivo TXT."""
-        id_peca = self.entry_id.get() # Pega o ID do campo (que foi preenchido pela seleção)
+        id_peca = self.entry_id.get() 
         if not id_peca:
             messagebox.showwarning("Erro", "Selecione uma peça na tabela para atualizar.")
             return
@@ -207,9 +191,6 @@ class TelaPecas(tk.Frame):
         if not nome or not quantidade or not localizacao:
             messagebox.showwarning("Entrada Inválida", "Nome, Quantidade e Localização são obrigatórios.")
             return
-
-        # REMOVIDO: a tentativa de converter quantidade para int.
-        # Todos os dados serão salvos como string.
 
         novos_dados = {
             "Nome_Peca": nome,

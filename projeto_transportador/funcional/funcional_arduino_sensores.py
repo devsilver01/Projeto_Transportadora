@@ -63,5 +63,4 @@ def acionar_sirene_fumaca(temperatura_atual):
         print(f"[{time.strftime('%H:%M:%S')}] SIRENE ACIONADA: Alta temperatura detectada ({temperatura_atual}°C)!")
         return "Sirene Ativada"
     else:
-        # print(f"[{time.strftime('%H:%M:%S')}] Sirene desativada (temperatura normal: {temperatura_atual}°C).")
         return "Sirene Desativada"
