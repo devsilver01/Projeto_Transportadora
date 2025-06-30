@@ -1,6 +1,24 @@
+"""
+Nome do arquivo: tela_controle_luzes.py
+Equipe: Breno Vidal, Silvestre Ferreira, Rafael Vitor, Maria Luiza, Luis Felipe.
+Turma: 91164
+Semestre: 2025.1
+"""
+
 import tkinter as tk
 from tkinter import ttk, messagebox
-from funcional.funcional_arduino_luzes import enviar_comando_luz
+# Importar a função de envio de comando simulado
+# Assumindo que você tem um arquivo funcional/funcional_arduino_luzes.py
+# com uma função enviar_comando_luz(comando_char)
+try:
+    from funcional.funcional_arduino_luzes import enviar_comando_luz
+except ImportError:
+    # Fallback para simulação se o arquivo não for encontrado (para testes independentes)
+    print("Aviso: 'funcional/funcional_arduino_luzes.py' não encontrado. Usando simulação interna.")
+    def enviar_comando_luz(comando_char):
+        print(f"Simulando envio para Arduino: Caractere '{comando_char}' enviado.")
+        return True
+
 
 class TelaControleLuzes(tk.Frame):
     def __init__(self, parent, controller):
@@ -10,10 +28,10 @@ class TelaControleLuzes(tk.Frame):
 
         # Mapeamento interno para determinar status (Ligado/Desligado) a partir do comando
         # Baseado nos seus 'case' do Arduino:
-        self.ligar_comandos = {'a', 'c', 'e', 'g', 'i', 'k', 'm', 'o'} # Adicionado comandos para os setores restantes
-        self.desligar_comandos = {'b', 'd', 'f', 'h', 'j', 'l', 'n', 'p'} # Adicionado comandos para os setores restantes
+        self.ligar_comandos = {'a', 'c', 'e', 'g', 'i', 'k', 'm', 'o', '1'} # Inclui '1' para ligar tudo
+        self.desligar_comandos = {'b', 'd', 'f', 'h', 'j', 'l', 'n', 'p', '0'} # Inclui '0' para desligar tudo
 
-        # Dicionário para armazenar as variáveis de status de cada luz
+        # Dicionário para armazenar as variáveis de status de cada luz individualmente
         self.light_status_vars = {} 
         self.last_feedback_letter_var = tk.StringVar(value="Nenhum comando enviado") # Variável para exibir a última letra
 
@@ -31,7 +49,7 @@ class TelaControleLuzes(tk.Frame):
         lbl_titulo = ttk.Label(self, text="Controle Manual de Luzes", font=("Helvetica", 20, "bold"), background="#F0F0F0", foreground="#333333")
         lbl_titulo.pack(pady=20)
 
-        # Frame para os botões de controle
+        # Frame para os botões de controle de setores individuais
         frame_controles = ttk.LabelFrame(self, text="Setores", padding="15 15 15 15")
         frame_controles.pack(pady=10, padx=20, fill="x")
 
@@ -41,12 +59,19 @@ class TelaControleLuzes(tk.Frame):
         self.create_luz_button(frame_controles, "Galpão - Bloco 2", "e", "f", 2)
         self.create_luz_button(frame_controles, "Galpão - Bloco 3", "g", "h", 3)
         self.create_luz_button(frame_controles, "Escritório", "i", "j", 4)
-        
-        # Novas letras para os setores restantes (Ex: k/l, m/n, o/p)
         self.create_luz_button(frame_controles, "Corredor", "k", "l", 5) 
         self.create_luz_button(frame_controles, "Área de Serviço", "m", "n", 6)
         self.create_luz_button(frame_controles, "Área Externa", "o", "p", 7)
 
+        # Botões para Ligar Tudo / Desligar Tudo (Controle Geral)
+        frame_todos_botoes = ttk.LabelFrame(self, text="Controle Geral", padding="15 15 15 15")
+        frame_todos_botoes.pack(pady=10, padx=20, fill="x")
+
+        btn_acender_todos = ttk.Button(frame_todos_botoes, text="Acender Tudo", command=lambda: self.enviar_comando_global('1')) # Envia '1'
+        btn_acender_todos.pack(side="left", padx=10, pady=5, expand=True, fill="x")
+
+        btn_apagar_todos = ttk.Button(frame_todos_botoes, text="Apagar Tudo", command=lambda: self.enviar_comando_global('0')) # Envia '0'
+        btn_apagar_todos.pack(side="right", padx=10, pady=5, expand=True, fill="x")
 
         # Label para exibir a última letra de feedback enviada
         lbl_last_feedback = ttk.Label(self, textvariable=self.last_feedback_letter_var, 
@@ -71,17 +96,14 @@ class TelaControleLuzes(tk.Frame):
         lbl_setor = ttk.Label(parent_frame, text=f"{nome_setor}:", font=("Helvetica", 11))
         lbl_setor.grid(row=row, column=0, padx=5, pady=5, sticky="w")
 
-        # Mapeia o prefixo para a variável de status
-        # Usamos o primeiro caractere de acender/apagar como um identificador único para o status
-        # Ou um nome mais legível para o mapeamento se preferir (ex: "Oficina_status")
         status_key = nome_setor.replace(" ", "_").replace("-", "_").lower() 
         
         btn_acender = ttk.Button(parent_frame, text="Acender", 
-                                 command=lambda c=acender_char, sk=status_key, ns=nome_setor: self.enviar_comando(c, sk, ns)) 
+                                 command=lambda c=acender_char, sk=status_key, ns=nome_setor: self.enviar_comando_individual(c, sk, ns)) 
         btn_acender.grid(row=row, column=1, padx=5, pady=5, sticky="ew")
 
         btn_apagar = ttk.Button(parent_frame, text="Apagar", 
-                                command=lambda c=apagar_char, sk=status_key, ns=nome_setor: self.enviar_comando(c, sk, ns))
+                                command=lambda c=apagar_char, sk=status_key, ns=nome_setor: self.enviar_comando_individual(c, sk, ns))
         btn_apagar.grid(row=row, column=2, padx=5, pady=5, sticky="ew")
         
         # Cria e armazena a variável de status para este setor de luzes
@@ -91,9 +113,9 @@ class TelaControleLuzes(tk.Frame):
         lbl_status = ttk.Label(parent_frame, textvariable=status_var, font=("Helvetica", 10, "italic"), foreground="gray")
         lbl_status.grid(row=row, column=3, padx=5, pady=5, sticky="w")
 
-    def enviar_comando(self, comando_char, status_key, nome_setor):
+    def enviar_comando_individual(self, comando_char, status_key, nome_setor):
         """
-        Chama a função para enviar o caractere de comando ao Arduino simulado, 
+        Chama a função para enviar o caractere de comando individual ao Arduino simulado, 
         atualiza o status na tela e exibe a letra de feedback.
         """
         if enviar_comando_luz(comando_char): # Envia a letra exata para o Arduino
@@ -117,3 +139,24 @@ class TelaControleLuzes(tk.Frame):
             messagebox.showinfo("Comando Enviado", f"Comando '{comando_char}' enviado (simulado). Status: '{full_feedback_message}'")
         else:
             messagebox.showerror("Erro", "Falha ao enviar comando para controle de luzes.")
+
+    def enviar_comando_global(self, comando_char_global: str):
+        """
+        Envia um comando global ('0' para desligar tudo, '1' para ligar tudo)
+        e atualiza o status de todas as luzes na interface.
+        """
+        if enviar_comando_luz(comando_char_global): # Envia o comando global ('0' ou '1')
+            status_text = "Ligado" if comando_char_global == '1' else "Desligado"
+            
+            # Atualiza o status de todos os labels de luzes individuais na interface
+            for status_var in self.light_status_vars.values():
+                status_var.set(status_text)
+            
+            # Mensagem de feedback global
+            action_desc = "Ligar Tudo" if comando_char_global == '1' else "Desligar Tudo"
+            full_feedback_message = f"Comando Geral: {action_desc} ({comando_char_global})"
+            self.last_feedback_letter_var.set(f"Último comando: {full_feedback_message}")
+            
+            messagebox.showinfo("Comando Geral Enviado", f"Comando '{comando_char_global}' enviado (simulado). Ação: {action_desc}!")
+        else:
+            messagebox.showerror("Erro", "Falha ao enviar comando global.")
